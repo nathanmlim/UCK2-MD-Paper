@@ -5,6 +5,8 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{hyperref}
+\usepackage{xr-hyper}
+
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
@@ -68,21 +70,6 @@ We then selected 1 conformer from each representative group and carried these fo
 
 \subsection{Analysis}
 
-% \begin{figure}[!ht]
-%   \begin{subfigure}{0.5\textwidth}
-%     \includegraphics[width=0.95\linewidth, height=5cm]{2AZC_canc/2AZC_canc-rmsd_full} 
-%     \caption{2AZC_{canc}-rmsd_full}
-%     \label{fig:2AZC_canc-rmsd_full}
-%   \end{subfigure}
-%   \begin{subfigure}{0.5\textwidth}
-%     \includegraphics[width=0.95\linewidth, height=5cm]{2AZC_canc/2AZC_canc-rmsd_trim}
-%     \caption{2AZC_{canc}-rmsd_trim}
-%     \label{fig:2AZC_canc-rmsd_trim}
-%   \end{subfigure}
-% \caption{Caption for this figure with two images}
-% \label{fig:2AZC_canc-rmsd}
-% \end{figure}
-
 \href{https://github.com/nathanmlim/Spitale/blob/master/manual_md/notebooks/RMSD-calculations.ipynb}{RMSD-Calculation Jupyter Notebook}
 
 For each nuceloside analog (2AZC and 2AZU), we ran five 100ns MD simulations for each of the two binding modes (cannonical and flipped).
@@ -138,8 +125,8 @@ From each of our assigned macrostates, we randomly sample 100 frames and then vi
 
 \href{https://github.com/nathanmlim/Spitale/blob/master/manual_md/notebooks/contact-distance.ipynb}{Contact-Distance Jupyter Notebook}
 
-Using the `compute contacts' tool from MDTraj, we compute the distance between the closest heavy atoms in the ligand and 3 residues: ASP62, TYR112, and ARG176 (Fig.\ref{fig:2AZC_flip-distance}).
-These residues were chosen in particular as ASP62 is known to be the catalytic reisude, while TYR112 and ARG176 are believed to play a key role in substrate specificity between uridine and cytidine.
+Using the `compute contacts' tool from MDTraj, we compute the distance between the closest heavy atoms in the ligand and 4 residues: ASP62, TYR112, HIS117 and ARG176 (Fig.\ref{fig:2AZC_flip-distance}).
+These residues were chosen in particular as ASP62 is known to be the catalytic reisude, while TYR112, HIS117, and ARG176 are believed to play a key role in substrate specificity between uridine and cytidine as they have been found to bind to the nucleobase moiety \cite{tanaka}.
 Here, we calculate the frequency in which the distance between the ligand and the residues are less than or equal to 3.5A, which we define as the minimum distance needed to form an interactive bond.
 
 \subsubsection{Hydrogen Bond Contacts}
@@ -162,15 +149,9 @@ Here, we calculate the frequency in which the distance between the ligand and th
 
 \href{https://github.com/nathanmlim/Spitale/blob/master/manual_md/notebooks/Hbonds.ipynb}{Hbonds Jupyter Notebook.}
 
-We compute the frequency of hydrogen bond contacts between the ligands and surround residues using two methods from MDTraj: the Bakker-Hubbard \cite{} and the Wernet-Nilsson methods \cite{}.
-The donors considered by these methods are `NH' and `OH' and the acceptors considered are `O' and `N' 
-Fig.\ref{fig:2AZC_flip-baker} shows the Bakker-Hubbard method which identifies hydrogen bonds based on a cutoff distance $d<2.5\angstrom$ and an angle $\theta>120$.
-Fig.\ref{fig:2AZC_flip-wernet} shows the Wernet-Nilsson method employs a different method where distance cutoff depends on the angle.
-The criterion employed is 
-\begin{equation}
-r_{DA}<3.3\angstrom - 0.00044 \times \delta{H_{DA}} \times \delta{H_{DA}}
-\end{equation} where $r_{DA}$ is the distance between donor and acceptor heavy atoms, and $\delta{H_{DA}}$ is the angle made by the hydrogen atom, donor, and acceptor atoms, measured in degrees.
-With the Wernet-Nilsson method, we only count hydrogen bond contacts if the are formed at least $5\%$ of the simulation time.
+We compute the frequency of hydrogen bond contacts between the ligands and surround residues using the HBonds plugin v1.2 \cite{} in VMD 1.9.3 \cite{}, shown in Figure \ref{fig:HBonds}.
+The criterion used for defining formation of a hydrogen bond is that the cutoff distance between a hydrogen bond donor and acceptor must be less than 3.0\angstrom and the angle is less than 20degress.
+Each colored bar corresponds to the hydrogen bond frequency from an individual MD simulation.
 
 
 \subsubsection{Comparisons to Xtal}
@@ -241,22 +222,120 @@ However, this particular binding mode appears to show slightly more instability 
 
 \subsubsection{Distance to key residues}
 
+In Figure \ref{fig:contact-distance}, we plot the distance between the closest ligand heavy atoms and the 4 residues: ASP62 (blue), TYR112 (orange), HIS117 (green) and ARG176 (red).
+One plot from each respective binding mode was chosen from the simulation in which contact with the catalytic residue ASP62 was highest.
+Additional plots from the other MD simulations for binding modes can be found in the supporting information.
+See Figure \ref{sup:2AZC_canc-dist} for $2AZC_{canc}$, Figure \ref{sup:2AZU_canc-dist} for $2AZU_{canc}$, Figure \ref{sup:2AZC_flip-dist} for $2AZC_{flip}$, and Figure \ref{sup:2AZU_flip-dist} for $2AZU_{flip}$.
 
-\subsubsection*{RMSD calculation to Xtal chains}
+For the canonical binding mode, we see a maximum contact frequency of 3.9\% (2AZC) and 2.5\% (2AZU) in which the ligand is $d<3.0\angstrom$ away from the catalytic residue ASP62.
+Figure \ref{fig:2AZC_canc-dist} shows that the 2AZC ligand in the canonical binding mode only rarely comes into contact with ASP62 but is in stable contact with HIS117 and ARG176.  
+Interestingly, Figure \ref{fig:2AZU_canc-dist} illustrates that even though the ligand appears to be stably bound to the key residues (TYR112, HIS117, and ARG176) the ligand may be too far away from ASP62 for catalysis.
 
-\subsection*{Flipped Binding Mode 2AZC vs 2AZU}
-\subsubsection*{Distance to key residues ASP62, TYR112, ARG}
-\subsubsection*{RMSD calculation to Xtal chains}
+In stark contrast, we see an enormous increase in contact frequency when simulating the flipped binding mode; 27.9\% (2AZC) and 80.4\% (2AZU).
+Figure \ref{fig:2AZC_flip-dist} shows the 2AZC ligand forms stable contacts with the catalytic residue ASP62 and residues TYR112/HIS117 but does not contact ARG176.
+Similarly, we see the same stable contacts being formed for 2AZU in Figure \ref{fig:2AZU_flip-dist}.
+
+These results suggest that the canonical binding mode may not be the binding mode the ligand adopts for catalytic turnover.
+Instead, our results indicate that the ligand must adopt the flipped conformation and that contact with residues TYR112/HIS117 appear to be necessary for catalytic turnover.
+Here, residue ARG176 seems to only serves a role in stabilizing the ligand in the binding site when in the canonical conformation.
+We believe the canonical conformation may represent the post-catalytic binding mode and ARG176 plays a role in the post-catalytic process.
+From Figure \ref{sup:2AZC_flip-dist}, there are several moments when the ligand $2AZC_{flip}$ comes into closer contact with ARG176, the distance with ASP62 increases and vice versa.
+
+\begin{figure}[!ht]
+\centering
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-dist_3.png}
+     \caption{2AZC_{canc}-distance}
+     \label{fig:2AZC_canc-dist}
+   \end{subfigure}
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-dist_4.png}
+     \caption{2AZU_{canc}-distance}
+     \label{fig:2AZU_canc-dist}
+   \end{subfigure}
+   \\
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-dist_3.png}
+     \caption{2AZC_{flip}-distance}
+     \label{fig:2AZC_flip-dist}
+   \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-dist_4.png}
+     \caption{2AZU_{flip}-distance}
+     \label{fig:2AZU_flip-dist}
+   \end{subfigure}
+\caption{2AZC_{canc}-distance}
+\label{fig:contact-distance}
+\end{figure}  
+
+\subsubsection{Hydrogen Bond Contacts}
+
+\begin{figure}[!ht]
+\centering
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-HBonds.png}
+     \caption{2AZC_{canc}-HBonds}
+     \label{fig:2AZC_canc-HBonds}
+   \end{subfigure}
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-HBonds.png}
+     \caption{2AZU_{canc}-HBonds}
+     \label{fig:2AZU_canc-HBonds}
+   \end{subfigure}
+   \\
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-HBonds.png}
+     \caption{2AZC_{flip}-HBonds}
+     \label{fig:2AZC_flip-HBonds}
+   \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-HBonds.png}
+     \caption{2AZU_{flip}-HBonds}
+     \label{fig:2AZU_flip-HBonds}
+   \end{subfigure}
+\caption{HBonds}
+\label{fig:HBonds}
+\end{figure}  
+
+In order to gain some insight on the interactions required for catalysis, we profile the hydrogen bond contacts between the ligand and surrounding protein residues.
+When comparing the cannonical binding modes, we see that $2AZC_{canc}$ forms hydrogen bond contacts mostly with ASP84, PHE114, HIS117, and ARG176; but no virtually no contact with the catalytic residue ASP62 (Fig. \ref{fig:2AZC_canc-HBonds}).
+For $2AZU_{canc}$ (Fig. \ref{fig:2AZU_canc-HBonds}), we frequent contacts with TYR112, ARG166, ASP170, and ARG176; also, virtually no contact with the catalytic residue ASP62.
+Given that we do not see hydrogen bonding between the ligand and ASP62, this supports the hypothesis that the canonical binding mode may not be the pose required for catalysis.
+
+For the flipped binding mode, we see a much higher rate of contact to ASP62 which supports the hypothesis that this binding mode may be what the ligand adopts for catalytic turnover.
+In Figure \ref{fig:2AZC_flip-Hbonds}, we see ~20\% contact with ASP62 and moderate rates of contact with ASP84, PHE114, HIS117, ARG169, and ARG174.
+For $2AZC_{flip}$, contact with ASP62 (yellow/green/red) appears to be related to hydrogen bonding with ASP84 (yellow/green), TYR112(yellow) and ARG174 (yellow).
+In Figure \ref{fig:2AZU_flip-HBonds}, we see ~70\% contact with ASP62 and moderate contacts with THR29, ASP84, TYR112, and HIS117.
+For $2AZU_{flip}$, contact with ASP62(green/red) appears to be related to hydrogen bonding with THR29(red), ASP84(green) and HIS117(green/red).
+
+From our results, we hypothesize that ASP84 plays a critical role in binding the both substrates for catalysis, given that we see high rates of contact for both 2AZU and 2AZC.
+The binding of 2AZC appears to specifically require contact with either ARG174/ARG176 residues and potentially contact with TYR112 for additional stability.
+In contrast, binding of 2AZU with TYR112 does not appear to prepare the ligand for catalysis (based on the flipped binding mode) but appears to stabilize the binding mode post-catalysis (based on the cannonical binding mode).
+For specificity of binding 2AZU, it appears that hydrogen bonding with HIS117 is required and potentially contact with THR29 for additional stability.
+
+\subsubsection{RMSD calculation to Xtal chains}
 
 
-\section*{Discussion}
+\href{https://github.com/nathanmlim/Spitale/blob/master/manual_md/notebooks/2AZC-pcca-rmsd.txt}{2AZC-RMSD}
+\href{https://github.com/nathanmlim/Spitale/blob/master/manual_md/notebooks/2AZU-pcca-rmsd.txt}{2AZU-RMSD}
+
+
+\section{Discussion}
 Support hypotheses:
 
   - Evidence of flipped binding mode
   
   - 2AZC > 2AZU
   
-     - Number of HBond contacts
+     - Number of HBond contacts?
      
      - RMSD for 20 - 100 ns?
 
@@ -270,10 +349,6 @@ The Discussion should be succinct and must not contain subheadings.
 
 %\bibliography{sample}
 
-%\noindent LaTeX formats citations and references automatically using the bibliography records in your .bib file, which you can edit via the project menu. Use the cite command for an inline citation, e.g.  \cite{Hao:gidmaps:2014}.
-
-%For data citations of datasets uploaded to e.g. \emph{figshare}, please use the \verb|howpublished| option in the bib entry to specify the platform and the link, as in the \verb|Hao:gidmaps:2014| example in the sample bibliography file.
-
 %\section*{Acknowledgements (not compulsory)}
 
 %Acknowledgements should be brief, and should not include thanks to anonymous referees and editors, or effusive comments. Grant or contribution numbers may be acknowledged.
@@ -283,33 +358,102 @@ The Discussion should be succinct and must not contain subheadings.
 %Must include all authors, identified by initials, for example:
 %A.A. conceived the experiment(s),  A.A. and B.A. conducted the experiment(s), C.A. and %D.A. analysed the results.  All authors reviewed the manuscript. 
 
-%\section*{Additional information}
+\section{Additional information}
 
-%To include, in this order: \textbf{Accession codes} (where applicable); \textbf{Competing interests} (mandatory statement). 
 
-%The corresponding author is responsible for submitting a \href{http://www.nature.com/srep/policies/index.html#competing}{competing interests statement} on behalf of all authors of the paper. This statement must be included in the submitted article file.
+\subsection{Distance to key residues}
 
-%\begin{figure}[ht]
-%\centering
-%\includegraphics[width=\linewidth]{stream}
-%\caption{Legend (350 words max). Example legend text.}
-%\label{fig:stream}
-%\end{figure}
+\begin{figure}[!ht]
+\centering
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-dist_0.png}
+   \end{subfigure}
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-dist_1.png}
+   \end{subfigure}
+   \\
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-dist_2.png}
+   \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-dist_4.png}
+   \end{subfigure}
+\caption{2AZC_{canc}-distance}
+\label{sup:2AZC_canc-dist}
+\end{figure}  
 
-%\begin{table}[ht]
-%\centering
-%\begin{tabular}{|l|l|l|}
-%\hline
-%Condition & n & p \\
-%\hline
-%A & 5 & 0.1 \\
-%\hline
-%B & 10 & 0.01 \\
-%\hline
-%\end{tabular}
-%\caption{\label{tab:example}Legend (350 words max). Example legend text.}
-%\end{table}
 
-%Figures and tables can be referenced in LaTeX using the ref command, e.g. Figure \ref{fig:stream} and Table \ref{tab:example}.
+\begin{figure}[!ht]
+\centering
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-dist_0.png}
+   \end{subfigure}
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-dist_1.png}
+   \end{subfigure}
+   \\
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-dist_2.png}
+   \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-dist_3.png}
+   \end{subfigure}
+\caption{2AZU_{canc}-distance}
+\label{sup:2AZU_canc-dist}
+\end{figure}  
+
+\begin{figure}[!ht]
+\centering
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-dist_0.png}
+   \end{subfigure}
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-dist_1.png}
+   \end{subfigure}
+   \\
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-dist_2.png}
+   \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-dist_4.png}
+   \end{subfigure}
+\caption{2AZC_{flip}-distance}
+\label{sup:2AZC_flip-dist}
+\end{figure}  
+
+\begin{figure}[!ht]
+\centering
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-dist_0.png}
+   \end{subfigure}
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-dist_1.png}
+   \end{subfigure}
+   \\
+   \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-dist_2.png}
+   \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-dist_3.png}
+   \end{subfigure}
+\caption{2AZU_{flip}-distance}
+\label{sup:2AZU_flip-dist}
+\end{figure}  
 
 \end{document}
