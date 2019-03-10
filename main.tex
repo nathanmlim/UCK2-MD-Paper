@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[demo]{graphicx}
-\usepackage{caption}
+%\usepackage{caption}
 \usepackage{subcaption}
 \usepackage{hyperref}
 \usepackage{xr-hyper}
@@ -52,7 +52,7 @@ The protein-ligand systems were placed in a periodic box with explicit TIP3P wat
 A 10A cut-off distance was used for the particle-mesh Ewald method \cite{}.
 Protein atoms were parameterized using the amber99sbildn forcefields \cite{} and ligands were parameterized using GAFF2 \cite{} in which atomic charges were assigned using the AM1-BCC charge model \cite{}
 
-\subsubsection{Protein preparation for MD simulations}
+\subsubsection{Protein preparation}
 To prepare the protein system for MD simulations, we used PDBFixer \cite{pdbfixer} to model in missing residues, add missing hydrogen atoms, and solvate our system.
 Sidechains were protonated in accordance with the pH=8.0 environment \cite{tanaka et. al 4} of the enzyme assay experiments.
 With the cytidine molecule bound, we energy minimized the protein-ligand complex for a maximum of 30,000 steps and followed with the equilibration protocol as follows.
@@ -61,9 +61,9 @@ First we apply a restraining force of 2.0 to the heavy atoms of the protein-liga
 Next, we decrease the restraining force to 0.5 and then conduct an NPT simulation for 10ps.
 Last, we use a 0.1 restraining force on the alpha-carbons (protein backbone) and the ligand heavy atoms and then NPT simulate for 10ps.
 
-\subsubsection{Docking the nucleoside analogs}
+\subsubsection{Docking}
 After equilibration of the UCK2-cytidine complex, we applied HYBRID docking \cite{} to dock our nucleoside analogs (2AZU and 2AZC) into the binding site.
-HYBRID differs from the standard docking approach such that it will use the co-crystallized ligand as a reference point and attempt to fit the nucleoside analogs within the binidng site by overlaying the docked ligands with the crystallographic ligand.
+HYBRID differs from the standard docking approach such that it will use the co-crystallized ligand as a reference point and attempt to fit the nucleoside analogs within the binding site by overlaying the docked ligands with the crystallographic ligand.
 From HYBRID docking, we generated up to 50 different conformers for each ligand and then followed the same equilibriation protocol described previously.
 After visual inspection, we found that the conformers tended to converge into two groups: 1 conformer which resembled the "cannonical" binding mode and another which had the sugar group "flipped".
 We then selected 1 conformer from each representative group and carried these forward for our production NPT 100ns MD simulations (no restraints).
@@ -91,13 +91,13 @@ For residue contact analysis we use the MDTraj v1.9.1 \cite{} toolkit.
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.9\linewidth]{2AZC_canc/2AZC_canc-tica.png}
-  \caption{2AZC_{canc}-pcca}
+  \caption{$2AZC_{canc}-pcca$}
   \label{fig:2AZC_canc-tica}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.9\linewidth]{2AZC_canc/2AZC_canc-pcca.png}
-  \caption{2AZC_{canc}-pcca}
+  \caption{$2AZC_{canc}-pcca$}
   \label{fig:2AZC_canc-pcca}
 \end{subfigure}
 \caption{Caption for this figure with two images}
@@ -119,13 +119,13 @@ From each of our assigned macrostates, we randomly sample 100 frames and then vi
 \href{https://github.com/nathanmlim/Spitale/blob/master/manual_md/notebooks/contact-distance.ipynb}{Contact-Distance Jupyter Notebook}
 
 Using the `compute contacts' tool from MDTraj, we compute the distance between the closest heavy atoms in the ligand and 4 residues: ASP62, TYR112, HIS117 and ARG176 (Fig.\ref{fig:contact-distance}).
-These residues were chosen in particular as ASP62 is known to be the catalytic reisude, while TYR112, HIS117, and ARG176 are believed to play a key role in substrate specificity between uridine and cytidine as they have been found to bind to the nucleobase moiety \cite{tanaka}.
+These residues were chosen in particular as ASP62 is known to be the catalytic residue, while TYR112, HIS117, and ARG176 are believed to play a key role in substrate specificity between uridine and cytidine as they have been found to bind to the nucleobase moiety \cite{tanaka}.
 Here, we calculate the frequency in which the distance between the ligand and the residues are less than or equal to 3.5A, which we define as the minimum distance needed to form an interactive bond.
 
 \subsubsection{Hydrogen Bond Contacts}
 
 We compute the frequency of hydrogen bond contacts between the ligands and surround residues using the HBonds plugin v1.2 \cite{} in VMD 1.9.3 \cite{}, shown in Figure \ref{fig:HBonds}.
-The criterion used for defining formation of a hydrogen bond is that the cutoff distance between a hydrogen bond donor and acceptor must be less than 3.0\angstrom and the angle is less than 20degress.
+The criterion used for defining formation of a hydrogen bond is that the cutoff distance between a hydrogen bond donor and acceptor must be less than 3.0\angstrom and the angle is less than 20 degrees.
 Each colored bar corresponds to the hydrogen bond frequency from an individual MD simulation.
 
 
@@ -146,26 +146,26 @@ The x-ray crystal structure of 2AZU represents the system in it's pre-catalytic 
    \begin{subfigure}{.45\textwidth}
      \centering
      \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-rmsd-trim.png}
-     \caption{2AZC_{canc}-rmsd_trim}
+     \caption{$2AZC_{canc}-rmsd_trim$}
      \label{fig:2AZC_canc-rmsd_trim}
    \end{subfigure}
    \begin{subfigure}{.45\textwidth}
      \centering
      \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-rmsd-trim.png}
-     \caption{2AZU_{canc}-rmsd_trim}
+     \caption{$2AZU_{canc}-rmsd_trim$}
      \label{fig:2AZU_canc-rmsd_trim}
    \end{subfigure}
    \\
    \begin{subfigure}{.45\textwidth}
      \centering
      \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-rmsd-trim.png}
-     \caption{2AZC_{flip}-rmsd_trim}
+     \caption{$2AZC_{flip}-rmsd_trim$}
      \label{fig:2AZC_flip-rmsd_trim}
    \end{subfigure}
     \begin{subfigure}{.45\textwidth}
      \centering
      \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-rmsd-trim.png}
-     \caption{2AZU_{flip}-rmsd_trim}
+     \caption{$2AZU_{flip}-rmsd_trim$}
      \label{fig:2AZU_flip-rmsd_trim}
    \end{subfigure}
 \end{figure}  
@@ -221,29 +221,29 @@ From Figure \ref{sup:2AZC_flip-dist}, there are several moments when the ligand 
    \begin{subfigure}{.45\textwidth}
      \centering
      \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-dist_3.png}
-     \caption{2AZC_{canc}-distance}
+     \caption{$2AZC_{canc}-distance$}
      \label{fig:2AZC_canc-dist}
    \end{subfigure}
    \begin{subfigure}{.45\textwidth}
      \centering
      \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-dist_4.png}
-     \caption{2AZU_{canc}-distance}
+     \caption{$2AZU_{canc}-distance$}
      \label{fig:2AZU_canc-dist}
    \end{subfigure}
    \\
    \begin{subfigure}{.45\textwidth}
      \centering
      \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-dist_3.png}
-     \caption{2AZC_{flip}-distance}
+     \caption{$2AZC_{flip}-distance$}
      \label{fig:2AZC_flip-dist}
    \end{subfigure}
     \begin{subfigure}{.45\textwidth}
      \centering
      \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-dist_4.png}
-     \caption{2AZU_{flip}-distance}
+     \caption{$2AZU_{flip}-distance$}
      \label{fig:2AZU_flip-dist}
    \end{subfigure}
-\caption{2AZC_{canc}-distance}
+\caption{contact-distance}
 \label{fig:contact-distance}
 \end{figure}  
 
@@ -254,26 +254,26 @@ From Figure \ref{sup:2AZC_flip-dist}, there are several moments when the ligand 
    \begin{subfigure}{.45\textwidth}
      \centering
      \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-HBonds.png}
-     \caption{2AZC_{canc}-HBonds}
+     \caption{$2AZC_{canc}-HBonds$}
      \label{fig:2AZC_canc-HBonds}
    \end{subfigure}
    \begin{subfigure}{.45\textwidth}
      \centering
      \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-HBonds.png}
-     \caption{2AZU_{canc}-HBonds}
+     \caption{$2AZU_{canc}-HBonds$}
      \label{fig:2AZU_canc-HBonds}
    \end{subfigure}
    \\
    \begin{subfigure}{.45\textwidth}
      \centering
      \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-HBonds.png}
-     \caption{2AZC_{flip}-HBonds}
+     \caption{$2AZC_{flip}-HBonds$}
      \label{fig:2AZC_flip-HBonds}
    \end{subfigure}
     \begin{subfigure}{.45\textwidth}
      \centering
      \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-HBonds.png}
-     \caption{2AZU_{flip}-HBonds}
+     \caption{$2AZU_{flip}-HBonds$}
      \label{fig:2AZU_flip-HBonds}
    \end{subfigure}
 \caption{HBonds}
@@ -303,13 +303,13 @@ For specificity of binding 2AZU, it appears that hydrogen bonding with HIS117 is
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.9\linewidth]{2AZC-xtal.png}
-  \caption{2AZC-xtal}
+  \caption{$2AZC-xtal$}
   \label{fig:2AZC-xtal}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.9\linewidth]{2AZU-xtal}
-  \caption{2AZU-xtal}
+  \caption{$2AZU-xtal$}
   \label{fig:2AZU-xtal}
 \end{subfigure}
 \caption{Caption for this figure with two images}
@@ -320,12 +320,12 @@ For specificity of binding 2AZU, it appears that hydrogen bonding with HIS117 is
 \begin{table}[!ht]
 \begin{tabular}{|l|l|l|}
 \hline
-                          & \textbf{2AZC\_xtal-B} & \textbf{BB\_RMSD} \\ \hline
-\textbf{2AZC\_canc-pcca2} & 3.69                  & 1.29             \\ \hline
-\textbf{2AZC\_flip-pcca3} & 4.97                  & 1.42              \\ \hline
-\textbf{}                 & \textbf{2AZU\_xtal-F} & \textbf{BB\_RMSD} \\ \hline
-\textbf{2AZU\_canc-pcca1} & 4.46                  & 2.73             \\ \hline
-\textbf{2AZU\_flip-pcca0} & 2.31                  & 2.74              \\ \hline
+                          & \textbf{$2AZC_{xtal}-B$} & \textbf{$BB_{RMSD}$} \\ \hline
+\textbf{$2AZC_{canc}-pcca2$} & 3.69                  & 1.29             \\ \hline
+\textbf{$2AZC_{flip}-pcca3$} & 4.97                  & 1.42              \\ \hline
+\textbf{}                 & \textbf{$2AZU_{xtal}-F$} & \textbf{$BB_{RMSD}$} \\ \hline
+\textbf{$2AZU_{canc}-pcca1$} & 4.46                  & 2.73             \\ \hline
+\textbf{$2AZU_{flip}-pcca0$} & 2.31                  & 2.74              \\ \hline
 \end{tabular}
 \end{table}
 
@@ -367,176 +367,176 @@ The Discussion should be succinct and must not contain subheadings.
 %Must include all authors, identified by initials, for example:
 %A.A. conceived the experiment(s),  A.A. and B.A. conducted the experiment(s), C.A. and %D.A. analysed the results.  All authors reviewed the manuscript. 
 
-\section{Additional information}
+% \section{Additional information}
 
-\subsection{MSM and Clustering}
+% \subsection{MSM and Clustering}
 
-\begin{figure}[!ht]
-\centering
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=.9\linewidth]{2AZC_canc/2AZC_canc-tica.png}
-  \caption{2AZC_{canc}-pcca}
-  \label{fig:2AZC_canc-tica}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=.9\linewidth]{2AZC_canc/2AZC_canc-pcca.png}
-  \caption{2AZC_{canc}-pcca}
-  \label{fig:2AZC_canc-pcca}
-\end{subfigure}
-\caption{Caption for this figure with two images}
-\label{fig:2AZC_canc-cluster}
-\end{figure}
+% \begin{figure}[!ht]
+% \centering
+% \begin{subfigure}{.5\textwidth}
+%   \centering
+%   \includegraphics[width=.9\linewidth]{2AZC_canc/2AZC_canc-tica.png}
+%   \caption{$2AZC_{canc}-pcca$}
+%   \label{fig:2AZC_canc-tica}
+% \end{subfigure}%
+% \begin{subfigure}{.5\textwidth}
+%   \centering
+%   \includegraphics[width=.9\linewidth]{2AZC_canc/2AZC_canc-pcca.png}
+%   \caption{$2AZC_{canc}-pcca$}
+%   \label{fig:2AZC_canc-pcca}
+% \end{subfigure}
+% \caption{Caption for this figure with two images}
+% \label{fig:2AZC_canc-cluster}
+% \end{figure}
 
-\begin{figure}[!ht]
-\centering
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=.9\linewidth]{2AZU_canc/2AZU_canc-tica.png}
-  \caption{2AZU_{canc}-pcca}
-  \label{fig:2AZU_canc-tica}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=.9\linewidth]{2AZU_canc/2AZU_canc-pcca.png}
-  \caption{2AZU_{canc}-pcca}
-  \label{fig:2AZU_canc-pcca}
-\end{subfigure}
-\caption{Caption for this figure with two images}
-\label{fig:2AZU_canc-cluster}
-\end{figure}
+% \begin{figure}[!ht]
+% \centering
+% \begin{subfigure}{.5\textwidth}
+%   \centering
+%   \includegraphics[width=.9\linewidth]{2AZU_canc/2AZU_canc-tica.png}
+%   \caption{$2AZU_{canc}-pcca$}
+%   \label{fig:2AZU_canc-tica}
+% \end{subfigure}%
+% \begin{subfigure}{.5\textwidth}
+%   \centering
+%   \includegraphics[width=.9\linewidth]{2AZU_canc/2AZU_canc-pcca.png}
+%   \caption{$2AZU_{canc}-pcca$}
+%   \label{fig:2AZU_canc-pcca}
+% \end{subfigure}
+% \caption{Caption for this figure with two images}
+% \label{fig:2AZU_canc-cluster}
+% \end{figure}
 
-\begin{figure}[!ht]
-\centering
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=.9\linewidth]{2AZC_flip/2AZC_flip-tica.png}
-  \caption{2AZC_{flip}-pcca}
-  \label{fig:2AZC_flip-tica}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=.9\linewidth]{2AZC_flip/2AZC_flip-pcca.png}
-  \caption{2AZC_{flip}-pcca}
-  \label{fig:2AZC_flip-pcca}
-\end{subfigure}
-\caption{Caption for this figure with two images}
-\label{fig:2AZC_flip-cluster}
-\end{figure}
+% \begin{figure}[!ht]
+% \centering
+% \begin{subfigure}{.5\textwidth}
+%   \centering
+%   \includegraphics[width=.9\linewidth]{2AZC_flip/2AZC_flip-tica.png}
+%   \caption{$2AZC_{flip}-pcca$}
+%   \label{fig:2AZC_flip-tica}
+% \end{subfigure}%
+% \begin{subfigure}{.5\textwidth}
+%   \centering
+%   \includegraphics[width=.9\linewidth]{2AZC_flip/2AZC_flip-pcca.png}
+%   \caption{$2AZC_{flip}-pcca$}
+%   \label{fig:2AZC_flip-pcca}
+% \end{subfigure}
+% \caption{Caption for this figure with two images}
+% \label{fig:2AZC_flip-cluster}
+% \end{figure}
 
-\begin{figure}[!ht]
-\centering
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=.9\linewidth]{2AZU_flip/2AZU_flip-tica.png}
-  \caption{2AZU_{flip}-pcca}
-  \label{fig:2AZU_flip-tica}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=.9\linewidth]{2AZU_flip/2AZU_flip-pcca.png}
-  \caption{2AZU_{flip}-pcca}
-  \label{fig:2AZU_flip-pcca}
-\end{subfigure}
-\caption{Caption for this figure with two images}
-\label{fig:2AZU_flip-cluster}
-\end{figure}
-
-
-\subsection{Distance to key residues}
-
-\begin{figure}[!ht]
-\centering
-   \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-dist_0.png}
-   \end{subfigure}
-   \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-dist_1.png}
-   \end{subfigure}
-   \\
-   \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-dist_2.png}
-   \end{subfigure}
-    \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-dist_4.png}
-   \end{subfigure}
-\caption{2AZC_{canc}-distance}
-\label{sup:2AZC_canc-dist}
-\end{figure}  
+% \begin{figure}[!ht]
+% \centering
+% \begin{subfigure}{.5\textwidth}
+%   \centering
+%   \includegraphics[width=.9\linewidth]{2AZU_flip/2AZU_flip-tica.png}
+%   \caption{$2AZU_{flip}-pcca$}
+%   \label{fig:2AZU_flip-tica}
+% \end{subfigure}%
+% \begin{subfigure}{.5\textwidth}
+%   \centering
+%   \includegraphics[width=.9\linewidth]{2AZU_flip/2AZU_flip-pcca.png}
+%   \caption{$2AZU_{flip}-pcca$}
+%   \label{fig:2AZU_flip-pcca}
+% \end{subfigure}
+% \caption{Caption for this figure with two images}
+% \label{fig:2AZU_flip-cluster}
+% \end{figure}
 
 
-\begin{figure}[!ht]
-\centering
-   \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-dist_0.png}
-   \end{subfigure}
-   \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-dist_1.png}
-   \end{subfigure}
-   \\
-   \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-dist_2.png}
-   \end{subfigure}
-    \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-dist_3.png}
-   \end{subfigure}
-\caption{2AZU_{canc}-distance}
-\label{sup:2AZU_canc-dist}
-\end{figure}  
+% \subsection{Distance to key residues}
 
-\begin{figure}[!ht]
-\centering
-   \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-dist_0.png}
-   \end{subfigure}
-   \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-dist_1.png}
-   \end{subfigure}
-   \\
-   \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-dist_2.png}
-   \end{subfigure}
-    \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-dist_4.png}
-   \end{subfigure}
-\caption{2AZC_{flip}-distance}
-\label{sup:2AZC_flip-dist}
-\end{figure}  
+% \begin{figure}[!ht]
+% \centering
+%   \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-dist_0.png}
+%   \end{subfigure}
+%   \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-dist_1.png}
+%   \end{subfigure}
+%   \\
+%   \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-dist_2.png}
+%   \end{subfigure}
+%     \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZC_canc/2AZC_canc-dist_4.png}
+%   \end{subfigure}
+% \caption{$2AZC_{canc}-distance$}
+% \label{sup:2AZC_canc-dist}
+% \end{figure}  
 
-\begin{figure}[!ht]
-\centering
-   \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-dist_0.png}
-   \end{subfigure}
-   \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-dist_1.png}
-   \end{subfigure}
-   \\
-   \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-dist_2.png}
-   \end{subfigure}
-    \begin{subfigure}{.45\textwidth}
-     \centering
-     \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-dist_3.png}
-   \end{subfigure}
-\caption{2AZU_{flip}-distance}
-\label{sup:2AZU_flip-dist}
-\end{figure}  
+
+% \begin{figure}[!ht]
+% \centering
+%   \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-dist_0.png}
+%   \end{subfigure}
+%   \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-dist_1.png}
+%   \end{subfigure}
+%   \\
+%   \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-dist_2.png}
+%   \end{subfigure}
+%     \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZU_canc/2AZU_canc-dist_3.png}
+%   \end{subfigure}
+% \caption{$2AZU_{canc}-distance$}
+% \label{sup:2AZU_canc-dist}
+% \end{figure}  
+
+% \begin{figure}[!ht]
+% \centering
+%   \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-dist_0.png}
+%   \end{subfigure}
+%   \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-dist_1.png}
+%   \end{subfigure}
+%   \\
+%   \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-dist_2.png}
+%   \end{subfigure}
+%     \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZC_flip/2AZC_flip-dist_4.png}
+%   \end{subfigure}
+% \caption{$2AZC_{flip}-distance$}
+% \label{sup:2AZC_flip-dist}
+% \end{figure}  
+
+% \begin{figure}[!ht]
+% \centering
+%   \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-dist_0.png}
+%   \end{subfigure}
+%   \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-dist_1.png}
+%   \end{subfigure}
+%   \\
+%   \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-dist_2.png}
+%   \end{subfigure}
+%     \begin{subfigure}{.45\textwidth}
+%      \centering
+%      \includegraphics[width=.95\linewidth]{2AZU_flip/2AZU_flip-dist_3.png}
+%   \end{subfigure}
+% \caption{2AZU_{flip}-distance}
+% \label{sup:2AZU_flip-dist}
+% \end{figure}  
 
 \end{document}
