@@ -3,8 +3,8 @@
 \usepackage[T1]{fontenc}
 \usepackage{caption}
 \usepackage{subcaption}
-
 \usepackage{hyperref}
+\usepackage{lineno}
 
 
 \hypersetup{
@@ -15,6 +15,13 @@
 }
 \usepackage{amsmath} % or simply amstext
 \newcommand{\angstrom}{\text{\normalfont\AA}}
+
+% Running line numbers:
+\linenumbers
+\setlength\linenumbersep{15pt}
+\renewcommand\linenumberfont{\normalfont\footnotesize\sffamily\color{gray}}
+%\pagewiselinenumbers % Same, but that reset on every page:
+\modulolinenumbers[1] % Number only every line. Change for fewer.
 
 \title{A novel nucleoside-enzyme pair for stringent cell-specific metabolic labeling of RNA}
 
