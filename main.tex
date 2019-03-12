@@ -10,7 +10,7 @@
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
-    filecolor=magenta,      
+    filecolor=magenta,
     urlcolor=cyan,
 }
 \usepackage{amsmath} % or simply amstext
@@ -41,7 +41,7 @@
 \section{Computational Methods}
 The starting structure used for the molecular dynamics (MD) simulations was taken from the crystal structure of human uridine-cytidine kinase 2 complex with the cytidine substrate (PDBID: 1UEJ) \cite{suzuki2004structural}.
 In this study four different MD simulations were carried out, using two different binding modes for each of the respective ligands 2AZU and 2AZC.
-Here, we differentiate between the two binding modes by the orientation of the ribose moiety on the molecule. 
+Here, we differentiate between the two binding modes by the orientation of the ribose moiety on the molecule.
 The "canonical" binding mode refers to the pose in which the azide (substituted on the 2' position) is pointed inwards into the binding site, see Figure \ref{fig:2AZC-xtal}.
 We refer to this as the canonical binding mode as this pose is similar to the pose found in the crystal structure with the bound cytidine substrate (PDBID: 1UEJ).
 The "flipped" binding mode refer to the pose in which the azide is pointed outwards from the binding site, see Figure \ref{fig:2AZU-xtal}.
@@ -55,7 +55,7 @@ Our simulation results, along with the x-ray crystal structures, support the hyp
 \subsection{Setup}
 \subsubsection{MD simulation parameters}
 All simulations in this study were conducted using OpenMM v7.1.1 \cite{openmm} at T=300K and P=1atm.
-Here, we use timesteps of 4fs by employing the hydrogen mass repartitioning (HMR) scheme \cite{hmr}. 
+Here, we use timesteps of 4fs by employing the hydrogen mass repartitioning (HMR) scheme \cite{hmr}.
 This scheme allows us to take larger timesteps by slowing down the fastest motions (i.e. hydrogen bond stretching) in our MD simulations.
 The HMR scheme constraints the bond length between hydrogens and their connected heavy atoms and reallocates mass from the connected heavy atom to the hydrogens.
 The protein-ligand systems were placed in a periodic box with explicit TIP3P water molecules using a 10A solvent padding distance and counter ions (NaCl) were added using a concentration of 150mM.
@@ -171,7 +171,7 @@ Once aligned by the protein backbone, we then compute the RMSD between crystalli
    \end{subfigure}
 \caption{Calculated RMSDs for ligand heavy atoms from 25-100ns MD simulations}
 \label{fig:rmsd}
-\end{figure}  
+\end{figure}
 
 \begin{table}[!ht]
 \caption{Calculated RMSDs for ligand heavy atoms from 25-100ns MD simulations}
@@ -203,7 +203,7 @@ Additional contact distance plots from the other MD simulations can be found in 
 See Figure \ref{sup:2AZC_canc-dist} for $2AZC_{canc}$, Figure \ref{sup:2AZU_canc-dist} for $2AZU_{canc}$, Figure \ref{sup:2AZC_flip-dist} for $2AZC_{flip}$, and Figure \ref{sup:2AZU_flip-dist} for $2AZU_{flip}$.
 
 For the canonical binding mode, we see a maximum contact frequency of 3.9\% (2AZC) and 2.5\% (2AZU) in which the ligand is $d<3.0\angstrom$ away from the catalytic residue ASP62.
-Figure \ref{fig:2AZC_canc-dist} shows that the $2AZC_{canc}$ ligand in the canonical binding mode only rarely comes into contact with ASP62 but is in stable contact with HIS117 and ARG176.  
+Figure \ref{fig:2AZC_canc-dist} shows that the $2AZC_{canc}$ ligand in the canonical binding mode only rarely comes into contact with ASP62 but is in stable contact with HIS117 and ARG176.
 Interestingly, Figure \ref{fig:2AZU_canc-dist} illustrates that even though the $2AZU_{canc}$ ligand appears to be stably bound to the key residues (TYR112, HIS117, and ARG176) the ligand is too far away from ASP62.
 
 In stark contrast, we see an enormous increase in contact frequency when simulating the flipped binding mode: 27.9\% for $2AZC_{flip}$ and 80.4\% for $2AZU_{flip}$.
@@ -239,7 +239,7 @@ Similarly, we see the same stable contacts being formed for $2AZU_{flip}$ in Fig
    \end{subfigure}
 \caption{contact-distance}
 \label{fig:contact-distance}
-\end{figure}  
+\end{figure}
 
 \subsubsection{Hydrogen Bond Contacts}
 
@@ -272,7 +272,7 @@ Similarly, we see the same stable contacts being formed for $2AZU_{flip}$ in Fig
    \end{subfigure}
 \caption{HBonds}
 \label{fig:HBonds}
-\end{figure}  
+\end{figure}
 
 In order to gain better insight on the interactions required for catalysis, we profile the hydrogen bond contacts between the ligand and surrounding protein residues.
 When comparing the cannonical binding modes, we see that $2AZC_{canc}$ forms hydrogen bond contacts mostly with ASP84, PHE114, HIS117, and ARG176; but no virtually no contact with the catalytic residue ASP62 (Fig. \ref{fig:2AZC_canc-HBonds}).
@@ -291,13 +291,13 @@ For $2AZU_{flip}$, contact with ASP62(green/red) appears to be related to hydrog
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{xtal/2AZC_canc-xtal_front.pdf}
+  \includegraphics[width=.9\linewidth]{xtal/2AZC_canc-xtal_front.png}
   \caption{$2AZC_{canc}-xtal$}
   \label{fig:2AZC-xtal}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{xtal/2AZU_flip-xtal_front.pdf}
+  \includegraphics[width=.9\linewidth]{xtal/2AZU_flip-xtal_front.png}
   \caption{$2AZU_{flip}-xtal$}
   \label{fig:2AZU-xtal}
 \end{subfigure}
@@ -353,7 +353,7 @@ Christopher Bayly and Gaetano Calabro at OpenEye Scientific Software for develop
 
 \section{Author contributions statement}
 
-S.N. conducted the experiment(s),  B.C crystallized the system, and N.M.L conducted the computational experiments.  All authors reviewed the manuscript. 
+S.N. conducted the experiment(s),  B.C crystallized the system, and N.M.L conducted the computational experiments.  All authors reviewed the manuscript.
 
 \section{Additional information}
 
@@ -455,7 +455,7 @@ S.N. conducted the experiment(s),  B.C crystallized the system, and N.M.L conduc
   \end{subfigure}
 \caption{$2AZC_{canc}-distance$}
 \label{sup:2AZC_canc-dist}
-\end{figure}  
+\end{figure}
 
 
 \begin{figure}[!ht]
@@ -479,7 +479,7 @@ S.N. conducted the experiment(s),  B.C crystallized the system, and N.M.L conduc
   \end{subfigure}
 \caption{$2AZU_{canc}-distance$}
 \label{sup:2AZU_canc-dist}
-\end{figure}  
+\end{figure}
 
 \begin{figure}[!ht]
 \centering
@@ -502,7 +502,7 @@ S.N. conducted the experiment(s),  B.C crystallized the system, and N.M.L conduc
   \end{subfigure}
 \caption{$2AZC_{flip}-distance$}
 \label{sup:2AZC_flip-dist}
-\end{figure}  
+\end{figure}
 
 \begin{figure}[!ht]
 \centering
@@ -525,6 +525,6 @@ S.N. conducted the experiment(s),  B.C crystallized the system, and N.M.L conduc
   \end{subfigure}
 \caption{$2AZU_{flip}-distance$}
 \label{sup:2AZU_flip-dist}
-\end{figure}  
+\end{figure}
 
 \end{document}
